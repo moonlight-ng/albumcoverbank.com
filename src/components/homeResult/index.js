@@ -22,6 +22,7 @@ export function HomeResult({
         wrapperRef={wrapperRef}
         error={error}
         isError={homeStatus === "error"}
+        isLoading={homeStatus === "loading"}
       />
       {homeFetch && covers?.length > 0 && <FetchMoreLoader />}
     </>

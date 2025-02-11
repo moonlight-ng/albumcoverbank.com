@@ -7,6 +7,7 @@ import classes from "./CoverBank.module.scss"
 
 //COMPONENTS
 import ProgressiveImg from "../../components/progressiveImg"
+import { FetchMoreLoader } from "../../components/FetchMoreLoader"
 
 export default function CoverGrid({
   covers,
@@ -15,23 +16,33 @@ export default function CoverGrid({
   setSelectedCover,
   setOpenModal,
   error,
-  isError
+  isError,
+  isLoading
 }) {
   const navigate = useNavigate()
 
+  // Handle loading state
+  if (isLoading) {
+    return (
+      <div className={classes.loadingState}>
+        <FetchMoreLoader />
+      </div>
+    )
+  }
+
   // Handle network/API errors
-  if (!covers || isError) {
+  if (isError || error) {
     return (
       <div className={classes.errorMessage}>
         <div className={classes.errorContent}>
-          <p>{error}</p>
+          <p>{error || "Sorry, we're having trouble connecting to our servers. Please try again later."}</p>
         </div>
       </div>
     )
   }
 
   // Handle no results found
-  if (covers && covers.length === 0) {
+  if (!covers || covers.length === 0) {
     return (
       <div className={classes.errorMessage}>
         <div className={classes.errorContent}>

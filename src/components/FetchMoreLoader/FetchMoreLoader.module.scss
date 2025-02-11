@@ -9,8 +9,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-      @include media("<=phone") {
-        margin: 4rem auto 0;
-        width: 90%;
-      }
+  @include media("<=phone") {
+    margin: 4rem auto 0;
+    width: 90%;
   }
+}
