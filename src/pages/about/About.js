@@ -11,17 +11,17 @@ export default function About() {
       <div className={classes.aboutWrapper}>
         <section>
           <h3>About</h3>
-          <p>Cover Bank stands as Nigeria's largest digital archive of album artwork, featuring over 5,300 covers spanning from 1950 to the present day. This extensive collection offers a visual journey through the evolution of Nigerian music and popular culture.</p>
-          <p>Our mission is twofold: to document Nigeria's rich musical heritage and to spotlight the often-overlooked graphic designers who shaped the visual identity of Nigerian music. Through meticulous research, we're establishing the first comprehensive history of Nigerian album cover design, recognizing these artists as vital contributors to the nation's cultural landscape.</p>
-          <p>Beyond preservation, Cover Bank serves as a dynamic platform for design exploration and storytelling. We provide an invaluable resource for:</p>
-          <ul>
-              <li>Music historians and researchers exploring Nigerian cultural history</li>
-              <li>Graphic designers seeking inspiration from vintage African aesthetics</li>
-              <li>Educators teaching visual arts and cultural studies</li>
-              <li>Artists and musicians interested in Nigeria's musical evolution</li>
-              <li>Design enthusiasts discovering West African graphic design heritage</li>
-          </ul>
-          <p>The archive is funded by Independent Arts, a creative studio for passion projects, and maintained by Helloworld, a technology studio for cultural production.</p>
+          <p>Cover Bank is Nigeria's largest digital archive of album artwork, home to over 5,300 stunning covers from 1950 to today. Each piece captures a moment in time, from the bold experiments of the 70s to the digital innovations of the present day.</p>
+          <p>We're on a mission to celebrate two incredible stories: Nigeria's rich musical heritage and the brilliant designers who gave it its visual power. These artists shaped how the world saw Nigerian music, yet many of their names have been forgotten. Through extensive research, we're crafting the first complete history of Nigerian album cover design, finally giving these creators their due.</p>
+          <p>Cover Bank isn't just an archive – it's a living source of inspiration. Our collection draws in music historians piecing together cultural stories, designers seeking fresh perspectives, educators sharing Nigeria's visual legacy, and anyone captivated by the evolution of African design. Every cover tells a story of creativity, culture, and artistic innovation.</p>
+          <p>This project is supportedby Independent Arts, a creative incubator dedicated to nurturing Nigerian artistry.</p>
+        </section>
+        <section>
+          <h3>Essays</h3>
+          <p>
+            <a href="https://www.waxpoetics.com/article/nigerian-1970s-album-covers-wuruwuru-archives/"><b>Face the Music</b></a> <br></br>
+            <span>Immaculata Abba & Wax Poetics</span>
+          </p>
         </section>
         <section>
           <h3>Join us</h3>
