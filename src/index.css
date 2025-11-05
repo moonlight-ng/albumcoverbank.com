@@ -27,25 +27,26 @@
   }
 
   .dark {
-    --background: 25 30% 7%;
-    --foreground: 0 0% 98%;
-    --card: 25 25% 9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 25 25% 9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 25 30% 7%;
-    --secondary: 25 20% 12%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 25 20% 12%;
-    --muted-foreground: 0 0% 60%;
-    --accent: 25 25% 15%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 0% 50%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 25 20% 10%;
-    --input: 25 25% 15%;
-    --ring: 0 0% 98%;
+    /* Rich, cohesive dark brown palette */
+    --background: 28 25% 12%;        /* deep espresso brown */
+    --foreground: 30 15% 92%;        /* soft warm ivory */
+    --card: 28 22% 14%;              /* slightly lighter for cards */
+    --card-foreground: 30 15% 92%;
+    --popover: 28 22% 14%;
+    --popover-foreground: 30 15% 92%;
+    --primary: 32 25% 80%;           /* light warm beige for accents/text */
+    --primary-foreground: 28 25% 12%;
+    --secondary: 28 20% 18%;         /* slightly lighter brown */
+    --secondary-foreground: 30 15% 90%;
+    --muted: 28 15% 20%;             /* background-muted tones */
+    --muted-foreground: 30 10% 65%;  /* warm muted beige text */
+    --accent: 30 25% 22%;            /* soft chestnut highlight */
+    --accent-foreground: 30 15% 90%;
+    --destructive: 10 40% 40%;       /* muted red-brown */
+    --destructive-foreground: 30 15% 92%;
+    --border: 28 20% 18%;
+    --input: 28 20% 18%;
+    --ring: 32 25% 75%;              /* soft golden-beige focus ring */
   }
 }
 
