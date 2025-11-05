@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { ExternalLink } from "lucide-react";
 import { Cover as CoverType } from "../lib/types";
-import { backgroundOptions } from "../data/backgrounds";
 import { SlideOver } from "./ui/slideover";
 
 interface CoverProps extends CoverType {
@@ -128,13 +127,11 @@ export const Cover = ({
 }: CoverProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
-  const randomBackground =
-    backgroundOptions[Math.floor(Math.random() * backgroundOptions.length)];
 
   return (
     <>
       <div
-        className={`aspect-square transition-opacity hover:opacity-80 rounded-lg overflow-hidden relative cursor-pointer ${randomBackground} ${
+        className={`aspect-square transition-opacity hover:opacity-80 rounded-lg overflow-hidden relative cursor-pointer bg-black-200 dark:bg-black-700 ${
           isLoading ? "animate-pulse" : ""
         }`}
         title={album}
