@@ -52,7 +52,7 @@ const fetchCovers = async (params: UseCoversParams): Promise<CoversResponse> => 
   const response = await fetch(`/api/covers?${queryParams.toString()}`);
   
   if (!response.ok) {
-    throw new Error(`Failed to fetch covers: ${response.statusText}`);
+    throw new Error(response.statusText);
   }
 
   return response.json();
