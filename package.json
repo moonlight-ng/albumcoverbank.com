@@ -51,6 +51,7 @@
   },
   "devDependencies": {
     "include-media": "^2.0.0",
-    "sass": "^1.60.0"
+    "sass": "^1.60.0",
+    "vercel": "^48.8.2"
   }
 }
