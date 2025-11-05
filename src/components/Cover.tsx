@@ -3,6 +3,15 @@ import { ExternalLink } from "lucide-react";
 import { Cover as CoverType } from "../lib/types";
 import { SlideOver } from "./ui/slideover";
 
+const getDomainFromUrl = (url: string): string => {
+  try {
+    const urlObj = new URL(url);
+    return urlObj.hostname.replace(/^www\./, "");
+  } catch {
+    return url;
+  }
+};
+
 interface CoverProps extends CoverType {
   id?: number | string;
 }
@@ -15,7 +24,7 @@ interface CoverDialogProps extends CoverType {
 const CoverDialog = ({
   album,
   imageUrl,
-  imageSource,
+  sourceUrl,
   year,
   musicArtistName,
   musicArtistUrl,
@@ -25,8 +34,8 @@ const CoverDialog = ({
   onClose,
 }: CoverDialogProps) => {
   return (
-    <SlideOver isOpen={isOpen} onClose={onClose} title="Album Details">
-      <div className="flex-1 overflow-y-auto p-6 space-y-6">
+    <SlideOver isOpen={isOpen} onClose={onClose} title={album}>
+      <div className="px-6 pt-2 pb-6 space-y-6">
         {/* Cover Image */}
         <div className="aspect-square rounded-lg overflow-hidden">
           <img
@@ -38,20 +47,26 @@ const CoverDialog = ({
 
         {/* Album Information */}
         <div className="space-y-4">
-          <div>
-            <h3 className="text-sm font-medium text-muted-foreground mb-1">
-              Album
-            </h3>
-            <p className="text-lg font-semibold">{album}</p>
-          </div>
 
-          <div>
-            <h3 className="text-sm font-medium text-muted-foreground mb-1">
-              Year
-            </h3>
-            <p className="text-base">{year}</p>
-          </div>
 
+        <div>
+            <h3 className="text-sm font-medium text-muted-foreground mb-1">
+              Cover Artist
+            </h3>
+            {coverArtistUrl ? (
+              <a
+                href={coverArtistUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-base text-primary hover:underline inline-flex items-center gap-1"
+              >
+                {coverArtistName}
+                <ExternalLink className="h-3 w-3" />
+              </a>
+            ) : (
+              <p className="text-base">{coverArtistName}</p>
+            )}
+          </div>
           <div>
             <h3 className="text-sm font-medium text-muted-foreground mb-1">
               Music Artist
@@ -73,35 +88,23 @@ const CoverDialog = ({
 
           <div>
             <h3 className="text-sm font-medium text-muted-foreground mb-1">
-              Cover Artist
+              Year
             </h3>
-            {coverArtistUrl ? (
-              <a
-                href={coverArtistUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-base text-primary hover:underline inline-flex items-center gap-1"
-              >
-                {coverArtistName}
-                <ExternalLink className="h-3 w-3" />
-              </a>
-            ) : (
-              <p className="text-base">{coverArtistName}</p>
-            )}
+            <p className="text-base">{year}</p>
           </div>
 
           <div>
             <h3 className="text-sm font-medium text-muted-foreground mb-1">
               Image Source
             </h3>
-            {imageSource ? (
+            {sourceUrl ? (
               <a
-                href={imageSource}
+                href={sourceUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-base text-primary hover:underline inline-flex items-center gap-1 break-all"
               >
-                {imageSource}
+                {getDomainFromUrl(sourceUrl)}
                 <ExternalLink className="h-3 w-3 flex-shrink-0" />
               </a>
             ) : (
@@ -117,7 +120,7 @@ const CoverDialog = ({
 export const Cover = ({
   album,
   imageUrl,
-  imageSource,
+  sourceUrl,
   year,
   musicArtistName,
   musicArtistUrl,
@@ -151,7 +154,7 @@ export const Cover = ({
       <CoverDialog
         album={album}
         imageUrl={imageUrl}
-        imageSource={imageSource}
+        sourceUrl={sourceUrl}
         year={year}
         musicArtistName={musicArtistName}
         musicArtistUrl={musicArtistUrl}

@@ -61,4 +61,42 @@
   .border-border {
     border-color: hsl(var(--border));
   }
+
+  .scroll-fade {
+    position: relative;
+  }
+
+  .scroll-fade::before {
+    content: '';
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    pointer-events: none;
+    z-index: 10;
+    display: block;
+  }
+
+  .scroll-fade-light::before {
+    background: linear-gradient(
+      to bottom,
+      #ffffff 0%,
+      #ffffff 40%,
+      rgba(255, 255, 255, 0.8) 60%,
+      rgba(255, 255, 255, 0.4) 80%,
+      transparent 100%
+    );
+  }
+
+  .scroll-fade-dark::before {
+    background: linear-gradient(
+      to bottom,
+      hsl(28 25% 8%) 0%,
+      hsl(28 25% 8%) 40%,
+      hsla(28, 25%, 8%, 0.8) 60%,
+      hsla(28, 25%, 8%, 0.4) 80%,
+      transparent 100%
+    );
+  }
 }

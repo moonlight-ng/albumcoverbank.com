@@ -28,7 +28,7 @@ const transformRecord = (record: any): Cover => {
   return {
     album: record.Album,
     imageUrl,
-    imageSource: record.Source,
+    sourceUrl: record.Source,
     year: parseInt(record.Year, 10),
     musicArtistName: record["Name (from Music Artists)"][0],
     musicArtistUrl: record["Website (from Music Artists)"][0],

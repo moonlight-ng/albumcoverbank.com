@@ -63,7 +63,7 @@ export const SlideOver = ({
             >
               {/* Header */}
               {title && (
-                <div className="flex items-center justify-between px-6 py-4 border-b border-border">
+                <div className="flex items-center justify-between px-6 pt-4 pb-0 shrink-0 relative z-10">
                   <Dialog.Title className="text-xl font-semibold">
                     {title}
                   </Dialog.Title>
@@ -77,8 +77,12 @@ export const SlideOver = ({
                 </div>
               )}
 
-              {/* Content */}
-              {children}
+              {/* Content with fade effect */}
+              <div className="relative flex-1 overflow-hidden">
+                <div className={cn("h-full overflow-y-auto scroll-fade", isDark ? "scroll-fade-dark" : "scroll-fade-light")}>
+                  {children}
+                </div>
+              </div>
             </Dialog.Panel>
           </Transition.Child>
         </div>
