@@ -134,8 +134,8 @@ export const Cover = ({
   return (
     <>
       <div
-        className={`aspect-square transition-opacity hover:opacity-80 rounded-lg overflow-hidden relative cursor-pointer bg-black-200 dark:bg-black-700 ${
-          isLoading ? "animate-pulse" : ""
+        className={`aspect-square transition-opacity hover:opacity-80 rounded-lg overflow-hidden relative cursor-pointer ${
+          isLoading ? "bg-secondary animate-pulse" : "bg-background"
         }`}
         title={album}
         onClick={() => setIsOpen(true)}

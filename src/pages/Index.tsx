@@ -1,7 +1,7 @@
-import { Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "../components/ui/button";
 import { SearchInput } from "../components/ui/search-input";
+import { Loader } from "../components/ui/loader";
 import { Cover } from "../components/Cover";
 import { Aside } from "../components/Aside";
 import { useCovers } from "../hooks/useCovers";
@@ -20,6 +20,16 @@ const Index = () => {
   const isPendingSearch = searchQuery !== debouncedSearchQuery;
   const showLoading = isLoading || isFetching || isPendingSearch;
 
+  const getLoadingMessage = () => {
+    if (isPendingSearch) {
+      return `Searching for "${searchQuery}"`;
+    }
+    if (debouncedSearchQuery) {
+      return `Searching for "${debouncedSearchQuery}"`;
+    }
+    return "";
+  };
+
   return (
     <div className="flex flex-col md:flex-row h-screen w-full bg-background">
       <Aside />
@@ -33,7 +43,7 @@ const Index = () => {
             disabled={isLoading}
           />
           <a
-            href="mailto:ope@moonlight.ng?subject=New%20Cover"
+            href="mailto:ope@moonlight.ng?subject=Album%20Cover%20Submission"
             className="hidden md:block"
           >
             <Button>Submit a cover</Button>
@@ -42,16 +52,7 @@ const Index = () => {
 
         <div className="flex-1 overflow-y-auto p-6">
           {showLoading && (
-            <div className="flex flex-col items-center justify-center h-full gap-3">
-              <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
-              <p className="text-muted-foreground">
-                {isPendingSearch
-                  ? `Searching for "${searchQuery}"...`
-                  : debouncedSearchQuery
-                  ? `Searching for "${debouncedSearchQuery}"...`
-                  : "Loading covers..."}
-              </p>
-            </div>
+            <Loader message={getLoadingMessage()} />
           )}
           
           {error && !showLoading && (

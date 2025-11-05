@@ -31,12 +31,16 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
           value={value}
           onChange={(e) => onValueChange(e.target.value)}
           disabled={disabled}
-          className="pl-9 pr-9 border-2 rounded-full w-full focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none focus:ring-0 focus:ring-offset-0 focus:outline-none"
+          className={cn(
+            "pl-9 pr-9 border-2 rounded-full w-full focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none focus:ring-0 focus:ring-offset-0 focus:outline-none",
+            "[&::placeholder]:text-[var(--placeholder-color)]"
+          )}
           style={{
             backgroundColor: 'hsl(var(--background))',
             borderColor: isDark ? 'hsla(0, 0%, 60%, 0.5)' : 'hsl(var(--border))',
-            outline: 'none'
-          }}
+            outline: 'none',
+            '--placeholder-color': isDark ? 'hsla(0, 0%, 60%, 0.5)' : 'hsl(var(--border))',
+          } as React.CSSProperties & { '--placeholder-color': string }}
           onFocus={(e) => {
             e.target.style.outline = 'none';
             e.target.style.boxShadow = 'none';
