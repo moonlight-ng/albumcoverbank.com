@@ -9,8 +9,9 @@ const buildSearchWhere = (searchTerm) => {
   if (!searchTerm || searchTerm.trim() === "") {
     return "";
   }
-  const encodedTerm = encodeURIComponent(searchTerm.trim());
-  return `(Album,like,%${encodedTerm}%)~or(Music Artist,like,%${encodedTerm}%)~or(Cover Artist,like,%${encodedTerm}%)`;
+  // Don't encode the search term - NocoDB will handle it
+  const searchValue = searchTerm.trim();
+  return `(Album,like,%${searchValue}%)~or(Music Artist,like,%${searchValue}%)~or(Cover Artist,like,%${searchValue}%)`;
 };
 
 module.exports = async (req, res) => {
@@ -38,17 +39,20 @@ module.exports = async (req, res) => {
 
     const whereClause = buildSearchWhere(searchTerm);
 
+    // Build query parameters manually to avoid double-encoding issues with where clause
     const params = new URLSearchParams({
       offset: offset,
       limit: limit,
       viewId: viewId,
     });
 
+    // Add where clause separately - URLSearchParams will encode it properly
     if (whereClause) {
       params.append("where", whereClause);
     }
 
-    const response = await axios.get(`${baseUrl}?${params.toString()}`, {
+    const url = `${baseUrl}?${params.toString()}`;
+    const response = await axios.get(url, {
       headers: { "xc-token": apiToken },
     });
 
