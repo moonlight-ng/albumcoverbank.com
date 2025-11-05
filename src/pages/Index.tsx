@@ -1,10 +1,9 @@
-import { Search, Loader2, X } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "../components/ui/button";
-import { Input } from "../components/ui/input";
+import { SearchInput } from "../components/ui/search-input";
 import { Cover } from "../components/Cover";
 import { Aside } from "../components/Aside";
-import { ThemeToggle } from "../components/ui/theme-toggle";
 import { useCovers } from "../hooks/useCovers";
 import { useSearchQuery } from "../hooks/useSearchQuery";
 
@@ -27,37 +26,15 @@ const Index = () => {
 
       <main className="flex-1 flex flex-col overflow-hidden">
         <header className="flex items-center gap-3 px-6 py-4">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <Input
-              type="text"
-              placeholder="Search albums, artists, designers..."
-              className="pl-9 pr-9 border-2 rounded-full"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              disabled={isLoading}
-              style={{
-                backgroundColor: 'hsl(var(--background))',
-                borderColor: 'hsl(var(--border))'
-              }}
-            />
-            {searchQuery && (
-              <button
-                type="button"
-                onClick={() => setSearchQuery("")}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-                aria-label="Clear search"
-              >
-                <X className="h-4 w-4" />
-              </button>
-            )}
-          </div>
-          <div className="flex items-center gap-2">
-            <ThemeToggle />
+          <SearchInput
+            value={searchQuery}
+            onValueChange={setSearchQuery}
+            placeholder="Search albums, artists, designers..."
+            disabled={isLoading}
+          />
           <Link to="/submit">
             <Button>Submit a cover</Button>
           </Link>
-          </div>
         </header>
 
         <div className="flex-1 overflow-y-auto p-6">

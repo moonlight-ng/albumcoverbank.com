@@ -1,6 +1,7 @@
 import { Info } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTheme } from "../hooks/useTheme";
+import { ThemeToggle } from "./ui/theme-toggle";
 
 const Logo = () => {
   const { theme } = useTheme();
@@ -21,7 +22,8 @@ export const Aside = () => {
           <Logo />
         </Link>
       </div>
-      <div>
+      <div className="flex flex-col py-4">
+        <ThemeToggle />
         <Link
           to="/about"
           className="flex h-12 w-12 items-center justify-center text-foreground transition-opacity hover:opacity-60"
