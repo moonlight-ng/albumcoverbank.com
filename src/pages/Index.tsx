@@ -1,14 +1,9 @@
-import { Search, Info } from "lucide-react";
+import { Search } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Cover } from "../components/Cover";
-
-const Logo = () => {
-  return (
-    <img src="/logo.svg" alt="Logo" className="h-6 w-6" />
-  );
-};
+import { Aside } from "../components/Aside";
 
 const albums = [
   { id: 1 },
@@ -24,19 +19,7 @@ const albums = [
 const Index = () => {
   return (
     <div className="flex h-screen w-full bg-background">
-      <aside className="hidden md:flex w-16 flex-col items-center justify-between border-r border-border">
-        <div className="py-4">
-          <Logo />
-        </div>
-        <div>
-        <Link
-          to="/about"
-          className="flex h-12 w-12 items-center justify-center text-foreground transition-opacity hover:opacity-60"
-        >
-          <Info className="h-5 w-5" />
-        </Link>
-        </div>
-      </aside>
+      <Aside />
 
       <main className="flex-1 flex flex-col overflow-hidden">
         <header className="flex items-center gap-3 border-b border-border px-6 py-4">
@@ -45,10 +28,12 @@ const Index = () => {
             <Input
               type="search"
               placeholder="Search albums, artists, designers..."
-              className="pl-9 border-border"
+              className="pl-9 border rounded-full"
             />
           </div>
-          <Button>Submit a cover</Button>
+          <Link to="/submit">
+            <Button>Submit a cover</Button>
+          </Link>
         </header>
 
         <div className="flex-1 overflow-y-auto p-6">

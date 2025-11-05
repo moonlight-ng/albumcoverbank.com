@@ -1,21 +1,9 @@
-import { Link } from "react-router-dom";
-
-const Logo = () => {
-  return (
-    <img src="/logo.svg" alt="Logo" className="h-6 w-6" />
-  );
-};
+import { Aside } from "../components/Aside";
 
 const About = () => {
   return (
     <div className="flex h-screen w-full bg-background">
-      <aside className="hidden md:flex w-16 flex-col items-center justify-between border-r border-border py-6">
-        <div>
-          <Link to="/" className="mb-4 block">
-            <Logo />
-          </Link>
-        </div>
-      </aside>
+      <Aside />
 
       <main className="flex-1 flex flex-col overflow-hidden">
         <header className="flex items-center gap-3 border-b border-border px-6 py-4">

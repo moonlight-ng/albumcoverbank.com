@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import About from "./pages/About";
+import Submit from "./pages/Submit";
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/about" element={<About />} />
+        <Route path="/submit" element={<Submit />} />
       </Routes>
     </Router>
   );
