@@ -11,7 +11,7 @@ const buildSearchWhere = (searchTerm) => {
   }
   // Don't encode the search term - NocoDB will handle it
   const searchValue = searchTerm.trim();
-  return `(Album,like,%${searchValue}%)~or(Music Artist,like,%${searchValue}%)~or(Cover Artist,like,%${searchValue}%)`;
+  return `(Album,like,%${searchValue}%)~or(Name (from Music Artists),like,%${searchValue}%)~or(Name (from Cover Artists),like,%${searchValue}%)`;
 };
 
 module.exports = async (req, res) => {
