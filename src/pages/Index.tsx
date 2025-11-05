@@ -1,29 +1,41 @@
-import { Calendar, Palette, Music, Search } from "lucide-react";
-import { FilterDropdown } from "../components/FilterDropdown";
+import { Search, Info } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
+import { Cover } from "../components/Cover";
+
+const Logo = () => {
+  return (
+    <img src="/logo.svg" alt="Logo" className="h-6 w-6" />
+  );
+};
 
 const albums = [
-  { id: 1, color: "bg-zinc-800" },
-  { id: 2, color: "bg-zinc-700" },
-  { id: 3, color: "bg-zinc-600" },
-  { id: 4, color: "bg-zinc-500" },
-  { id: 5, color: "bg-zinc-400" },
-  { id: 6, color: "bg-zinc-300" },
-  { id: 7, color: "bg-zinc-200" },
-  { id: 8, color: "bg-zinc-900" },
+  { id: 1 },
+  { id: 2 },
+  { id: 3 },
+  { id: 4 },
+  { id: 5 },
+  { id: 6 },
+  { id: 7 },
+  { id: 8 },
 ];
 
 const Index = () => {
   return (
     <div className="flex h-screen w-full bg-background">
-      <aside className="hidden md:flex w-16 flex-col items-center gap-4 border-r border-border py-6">
-        <div className="mb-4">
-          <Music className="h-6 w-6" />
+      <aside className="hidden md:flex w-16 flex-col items-center justify-between border-r border-border">
+        <div className="py-4">
+          <Logo />
         </div>
-        <FilterDropdown icon={<Calendar className="h-5 w-5" />} label="Filter by Year" />
-        <FilterDropdown icon={<Palette className="h-5 w-5" />} label="Filter by Designer" />
-        <FilterDropdown icon={<Music className="h-5 w-5" />} label="Filter by Artist" />
+        <div>
+        <Link
+          to="/about"
+          className="flex h-12 w-12 items-center justify-center text-foreground transition-opacity hover:opacity-60"
+        >
+          <Info className="h-5 w-5" />
+        </Link>
+        </div>
       </aside>
 
       <main className="flex-1 flex flex-col overflow-hidden">
@@ -36,16 +48,13 @@ const Index = () => {
               className="pl-9 border-border"
             />
           </div>
-          <Button>Submit</Button>
+          <Button>Submit a cover</Button>
         </header>
 
         <div className="flex-1 overflow-y-auto p-6">
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             {albums.map((album) => (
-              <div
-                key={album.id}
-                className={`aspect-square ${album.color} transition-opacity hover:opacity-80`}
-              />
+              <Cover key={album.id} id={album.id} />
             ))}
           </div>
         </div>
