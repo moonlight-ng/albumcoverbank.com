@@ -8,7 +8,7 @@ export const ThemeToggle = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="flex h-12 w-12 items-center justify-center text-foreground transition-opacity hover:opacity-60 focus:outline-none focus:ring-0 focus:ring-offset-0"
+      className="flex h-10 w-10 md:h-12 md:w-12 items-center justify-center text-foreground transition-opacity hover:opacity-60 focus:outline-none focus:ring-0 focus:ring-offset-0"
       aria-label="Toggle theme"
     >
       {isDark ? (

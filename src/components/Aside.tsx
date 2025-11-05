@@ -16,17 +16,17 @@ const Logo = () => {
 
 export const Aside = () => {
   return (
-    <aside className="hidden md:flex w-16 flex-col items-center justify-between">
-      <div className="py-4">
+    <aside className="relative md:relative flex md:w-16 flex-row md:flex-col items-center md:items-center justify-between md:justify-between border-b md:border-b-0 md:border-r border-border px-4 md:px-0 py-3 md:py-0 md:h-full w-full md:w-16">
+      <div className="flex items-center md:py-4 md:justify-center">
         <Link to="/">
           <Logo />
         </Link>
       </div>
-      <div className="flex flex-col py-4">
+      <div className="flex flex-row md:flex-col items-center gap-3 md:gap-0 md:py-4 md:justify-center">
         <ThemeToggle />
         <Link
           to="/about"
-          className="flex h-12 w-12 items-center justify-center text-foreground transition-opacity hover:opacity-60"
+          className="flex h-10 w-10 md:h-12 md:w-12 items-center justify-center text-foreground transition-opacity hover:opacity-60"
         >
           <Info className="h-5 w-5" />
         </Link>
