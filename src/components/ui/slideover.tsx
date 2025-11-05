@@ -2,6 +2,7 @@ import React from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { X } from "lucide-react";
 import { cn } from "../../lib/utils";
+import { useTheme } from "../../hooks/useTheme";
 
 interface SlideOverProps {
   isOpen: boolean;
@@ -18,6 +19,9 @@ export const SlideOver = ({
   children,
   className,
 }: SlideOverProps) => {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
   return (
     <Transition show={isOpen} as={React.Fragment}>
       <Dialog onClose={onClose} className="relative z-50">
@@ -50,9 +54,12 @@ export const SlideOver = ({
           >
             <Dialog.Panel
               className={cn(
-                "w-full max-w-md h-full bg-white shadow-xl pointer-events-auto flex flex-col",
+                "w-full max-w-md h-full shadow-xl pointer-events-auto flex flex-col",
                 className
               )}
+              style={{
+                backgroundColor: isDark ? 'hsl(var(--background))' : '#ffffff'
+              }}
             >
               {/* Header */}
               {title && (

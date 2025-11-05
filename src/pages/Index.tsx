@@ -4,6 +4,7 @@ import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Cover } from "../components/Cover";
 import { Aside } from "../components/Aside";
+import { ThemeToggle } from "../components/ui/theme-toggle";
 import { useCovers } from "../hooks/useCovers";
 import { useSearchQuery } from "../hooks/useSearchQuery";
 
@@ -25,16 +26,20 @@ const Index = () => {
       <Aside />
 
       <main className="flex-1 flex flex-col overflow-hidden">
-        <header className="flex items-center gap-3 border-b border-border px-6 py-4">
+        <header className="flex items-center gap-3 px-6 py-4">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               type="text"
               placeholder="Search albums, artists, designers..."
-              className="pl-9 pr-9 border rounded-full"
+              className="pl-9 pr-9 border-2 rounded-full"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               disabled={isLoading}
+              style={{
+                backgroundColor: 'hsl(var(--background))',
+                borderColor: 'hsl(var(--border))'
+              }}
             />
             {searchQuery && (
               <button
@@ -47,9 +52,12 @@ const Index = () => {
               </button>
             )}
           </div>
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
           <Link to="/submit">
             <Button>Submit a cover</Button>
           </Link>
+          </div>
         </header>
 
         <div className="flex-1 overflow-y-auto p-6">
