@@ -78,11 +78,6 @@ const About = () => {
                   </li>
                 ))}
               </ul>
-
-              {/* Optional inline legend for role order */}
-              <p className="text-xs text-muted-foreground pt-2">
-                Listed by role priority: {roleOrder.join(" → ")}.
-              </p>
             </div>
           </section>
         </div>
