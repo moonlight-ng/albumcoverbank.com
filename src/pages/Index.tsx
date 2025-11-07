@@ -7,6 +7,29 @@ import { Aside } from "../components/Aside";
 import { useCovers } from "../hooks/useCovers";
 import { useSearchQuery } from "../hooks/useSearchQuery";
 
+const Message = ({ error, searchQuery }: { error?: Error; searchQuery?: string }) => {
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full gap-2">
+        <p className="text-destructive">Error loading covers</p>
+        <p className="text-sm text-muted-foreground">{error.message}</p>
+      </div>
+    );
+  }
+
+  if (searchQuery) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <p className="text-muted-foreground">
+          No covers found for "{searchQuery}"
+        </p>
+      </div>
+    );
+  }
+
+  return null;
+};
+
 const Index = () => {
   const { searchQuery, debouncedSearchQuery, setSearchQuery } = useSearchQuery();
 
@@ -15,20 +38,6 @@ const Index = () => {
     limit: 25,
     searchTerm: debouncedSearchQuery,
   });
-
-  // Show loading when API is loading/fetching OR when user is typing (debounce pending)
-  const isPendingSearch = searchQuery !== debouncedSearchQuery;
-  const showLoading = isLoading || isFetching || isPendingSearch;
-
-  const getLoadingMessage = () => {
-    if (isPendingSearch) {
-      return `Searching for "${searchQuery}"`;
-    }
-    if (debouncedSearchQuery) {
-      return `Searching for "${debouncedSearchQuery}"`;
-    }
-    return "";
-  };
 
   return (
     <div className="flex flex-col md:flex-row h-screen w-full bg-background">
@@ -51,33 +60,19 @@ const Index = () => {
         </header>
 
         <div className="flex-1 overflow-y-auto p-6">
-          {showLoading && (
-            <Loader message={getLoadingMessage()} />
-          )}
-          
-          {error && !showLoading && (
-            <div className="flex flex-col items-center justify-center h-full gap-2">
-              <p className="text-destructive">Error loading covers</p>
-              <p className="text-sm text-muted-foreground">{error.message}</p>
-            </div>
-          )}
-
-          {!showLoading && !error && (
+          {isLoading ? (
             <>
-              {covers.length === 0 && debouncedSearchQuery ? (
-                <div className="flex items-center justify-center h-full">
-                  <p className="text-muted-foreground">
-                    No covers found for "{debouncedSearchQuery}"
-                  </p>
-                </div>
-              ) : (
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                  {covers.map((cover, index) => (
-                    <Cover key={`${cover.album}-${index}`} {...cover} id={index} />
-                  ))}
-                </div>
-              )}
+              <Loader />
+              <p className="text-muted-foreground">Loading covers...</p>
             </>
+          ) : error || (covers.length === 0 && debouncedSearchQuery) ? (
+            <Message error={error || undefined} searchQuery={covers.length === 0 && debouncedSearchQuery ? debouncedSearchQuery : undefined} />
+          ) : (
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+              {covers.map((cover, index) => (
+                <Cover key={`${cover.album}-${index}`} {...cover} id={index} />
+              ))}
+            </div>
           )}
         </div>
       </main>

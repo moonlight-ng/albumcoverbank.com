@@ -1,10 +1,9 @@
 import { useTheme } from "../../hooks/useTheme";
 
 interface LoaderProps {
-  message?: string;
 }
 
-export const Loader = ({ message }: LoaderProps) => {
+export const Loader = ({ }: LoaderProps) => {
   const { theme } = useTheme();
 
   return (
@@ -14,11 +13,6 @@ export const Loader = ({ message }: LoaderProps) => {
         alt="Album Cover Bank" 
         className="h-12 w-12 animate-pulse"
       />
-      {message && (
-        <p className="text-muted-foreground opacity-50">
-          {message}
-        </p>
-      )}
     </div>
   );
 };
