@@ -8,7 +8,7 @@ export function PageContainer({
   ...props
 }: PageContainerProps) {
   return (
-    <div className={cn("mx-auto w-full h-full container", className)} {...props}>
+    <div className={cn("mx-auto w-full h-full container px-6", className)} {...props}>
       {children}
     </div>
   );

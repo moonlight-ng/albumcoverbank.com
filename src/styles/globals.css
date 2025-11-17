@@ -123,3 +123,30 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .container {
+    width: 100%;
+    /* im overriding tailwinds default container width here to keep consistent with old design */
+
+    @media (width >= 40rem /* 640px */) {
+      max-width: 48rem; /* 768px - increased from 640px */
+    }
+
+    @media (width >= 48rem /* 768px */) {
+      max-width: 56rem; /* 896px - increased from 768px */
+    }
+
+    @media (width >= 64rem /* 1024px */) {
+      max-width: 72rem; /* 1152px - increased from 1024px */
+    }
+
+    @media (width >= 80rem /* 1280px */) {
+      max-width: 88rem; /* 1408px - increased from 1280px */
+    }
+
+    @media (width >= 96rem /* 1536px */) {
+      max-width: 96rem; /* 1536px - unchanged */
+    }
+  }
+}

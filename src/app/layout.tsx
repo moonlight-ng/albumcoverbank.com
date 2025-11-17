@@ -49,10 +49,15 @@ export const metadata: Metadata = {
     ],
   },
   icons: {
-    icon: SITE_CONFIG.favicon,
-    shortcut: "/icon.png",
+    icon: [
+      { url: "/icon0.svg", type: "image/svg+xml" },
+      { url: "/icon1.png", type: "image/png" },
+      { url: SITE_CONFIG.favicon },
+    ],
+    shortcut: "/icon1.png",
     apple: "/apple-icon.png",
   },
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({

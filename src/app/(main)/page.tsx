@@ -132,7 +132,7 @@ export default function Home() {
       <div className="flex-1 overflow-y-auto">
         <PageContainer className="p-6">
           {isLoading && covers.length === 0 ? (
-            <ul className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4">
+            <ul className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
               {Array.from({ length: 50 }, (_, index) => {
                 const skeletonId = `initial-skeleton-${index}`;
                 return (
@@ -145,7 +145,7 @@ export default function Home() {
           ) : (
             <motion.ul
               animate="visible"
-              className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4"
+              className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4"
               initial="hidden"
               variants={containerVariants}
             >
