@@ -4,12 +4,12 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { motion, AnimatePresence } from "motion/react";
 import { fetchCovers } from "@/lib/fetch";
 import type { Cover } from "@/types/api";
-import { Cover as CoverComponent } from "@/components/cover";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PageHeader } from "@/components/layout/header";
 import { useState, useEffect } from "react";
 import { CoverSheet } from "@/components/cover-sheet";
 import { PageContainer } from "@/components/layout/container";
+import { AlbumCover } from "@/components/album-cover";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -160,7 +160,7 @@ export default function Home() {
                     layoutId={`${cover.album}-${index}`}
                     variants={itemVariants}
                   >
-                    <CoverComponent
+                    <AlbumCover
                       {...cover}
                       id={`${cover.album}-${index}`}
                       onClick={() => {

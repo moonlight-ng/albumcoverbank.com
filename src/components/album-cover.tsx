@@ -4,12 +4,12 @@ import { useState } from "react";
 import type { Cover as CoverType } from "@/types/api";
 import Image from "next/image";
 
-interface CoverProps extends CoverType {
+interface AlbumCoverProps extends CoverType {
   id: string | number;
   onClick: () => void;
 }
 
-export const Cover = ({ album, imageUrl, onClick }: CoverProps) => {
+export const AlbumCover = ({ album, imageUrl, onClick }: AlbumCoverProps) => {
   const [isLoading, setIsLoading] = useState(true);
 
   return (
