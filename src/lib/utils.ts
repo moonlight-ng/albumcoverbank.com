@@ -1,24 +1,26 @@
-type ClassValue = string | number | boolean | undefined | null | { [key: string]: boolean } | ClassValue[];
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 
-export function cn(...inputs: ClassValue[]): string {
-  const classes: string[] = [];
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
 
-  for (const input of inputs) {
-    if (!input) continue;
-
-    if (typeof input === "string" || typeof input === "number") {
-      classes.push(String(input));
-    } else if (Array.isArray(input)) {
-      const inner = cn(...input);
-      if (inner) classes.push(inner);
-    } else if (typeof input === "object") {
-      for (const [key, value] of Object.entries(input)) {
-        if (value) classes.push(key);
-      }
-    }
+export function getBaseUrl() {
+  // In production, use the environment variable
+  if (process.env.NEXT_PUBLIC_APP_URL) {
+    return process.env.NEXT_PUBLIC_APP_URL;
   }
 
-  // Simple deduplication for Tailwind classes (basic implementation)
-  // In a real app, you'd want tailwind-merge for proper class merging
-  return classes.filter(Boolean).join(" ");
+  // In development, use localhost
+  if (process.env.NODE_ENV === "development") {
+    return "http://localhost:3000";
+  }
+
+  // For Vercel deployments, try to construct the URL
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+
+  // Fallback for other environments
+  return "http://localhost:3000";
 }
