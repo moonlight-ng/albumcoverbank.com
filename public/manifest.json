@@ -1,25 +1,36 @@
 {
-  "short_name": "Cover Bank",
   "name": "Album Cover Bank",
+  "short_name": "Album Cover Bank",
+  "description": "A searchable archive of 5000+ images of Nigerian album cover art",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "/icon0.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     },
     {
-      "src": "logo.svg",
-      "type": "image/svg+xml",
-      "sizes": "192x192"
+      "src": "/icon1.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "logo.svg",
-      "type": "image/svg+xml",
-      "sizes": "512x512"
+      "src": "/web-app-manifest-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ],
-  "start_url": ".",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "start_url": "/",
+  "scope": "/"
 }
