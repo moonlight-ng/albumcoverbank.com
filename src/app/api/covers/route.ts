@@ -36,6 +36,8 @@ export async function GET(request: NextRequest) {
     const limit = searchParams.get("limit") || "25";
     const searchTerm = searchParams.get("searchTerm") || "";
 
+    console.log("Fetching covers with params:", { offset, limit, searchTerm });
+
     const whereClause = buildSearchWhere(searchTerm);
 
     // Build query parameters manually to avoid double-encoding issues with where clause
@@ -51,11 +53,19 @@ export async function GET(request: NextRequest) {
     }
 
     const url = `${baseUrl}?${params.toString()}`;
+    console.log("NocoDB API URL:", url.replace(apiToken || "", "[REDACTED]"));
+
     const response = await axios.get(url, {
       headers: { "xc-token": apiToken },
     });
 
     const data = response.data;
+    console.log("NocoDB response:", {
+      recordsCount: data.records?.length || data.list?.length || 0,
+      hasOffset: !!data.offset,
+      hasPageInfo: !!data.pageInfo,
+      pageInfo: data.pageInfo,
+    });
 
     // Transform response to match expected format
     // The API returns { records: [...], offset: ... } structure

@@ -53,6 +53,8 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
+  const LIMIT = 50;
+
   const {
     data,
     isLoading,
@@ -65,14 +67,27 @@ export default function Home() {
     queryFn: ({ pageParam = 0 }) =>
       fetchCovers({
         offset: pageParam,
-        limit: 50,
+        limit: LIMIT,
         searchTerm: debouncedSearchQuery,
       }),
     initialPageParam: 0,
-    getNextPageParam: (lastPage) => {
+    getNextPageParam: (lastPage, allPages) => {
+      // If API returns an offset, use it
       if (lastPage.offset) {
         return parseInt(lastPage.offset, 10);
       }
+
+      // If offset is null but we got a full page of results,
+      // calculate the next offset based on total records fetched
+      if (lastPage.records.length === LIMIT) {
+        const totalRecordsFetched = allPages.reduce(
+          (sum, page) => sum + page.records.length,
+          0
+        );
+        return totalRecordsFetched;
+      }
+
+      // No more pages
       return undefined;
     },
   });
@@ -131,59 +146,61 @@ export default function Home() {
       />
       <div className="flex-1 overflow-y-auto">
         <PageContainer className="p-6">
-          {isLoading && covers.length === 0 ? (
-            <ul className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
-              {Array.from({ length: 50 }, (_, index) => {
-                const skeletonId = `initial-skeleton-${index}`;
-                return (
-                  <li key={skeletonId}>
-                    <Skeleton className="aspect-square w-full rounded-lg" />
-                  </li>
-                );
-              })}
-            </ul>
-          ) : (
-            <motion.ul
-              animate="visible"
-              className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4"
-              initial="hidden"
-              variants={containerVariants}
-            >
-              <AnimatePresence mode="popLayout">
-                {covers.map((cover, index) => (
-                  <motion.li
-                    animate="visible"
-                    exit="exit"
-                    initial="hidden"
-                    key={`${cover.album}-${index}`}
-                    layout
-                    layoutId={`${cover.album}-${index}`}
-                    variants={itemVariants}
-                  >
-                    <AlbumCover
-                      {...cover}
-                      id={`${cover.album}-${index}`}
-                      onClick={() => {
-                        setSelectedCover(cover);
-                        setIsSheetOpen(true);
-                      }}
-                    />
-                  </motion.li>
-                ))}
-                {isFetchingNextPage &&
-                  Array.from({ length: 10 }, (_, index) => (
+          <motion.ul
+            animate={covers.length > 0 ? "visible" : undefined}
+            className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4"
+            initial={covers.length > 0 ? "hidden" : undefined}
+            variants={containerVariants}
+          >
+            <AnimatePresence mode="popLayout">
+              {isLoading && covers.length === 0
+                ? Array.from({ length: 50 }, (_, index) => {
+                    const skeletonId = `initial-skeleton-${index}`;
+                    return (
+                      <motion.li
+                        key={skeletonId}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0, scale: 0.9 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <Skeleton className="aspect-square w-full rounded-lg" />
+                      </motion.li>
+                    );
+                  })
+                : covers.map((cover, index) => (
                     <motion.li
-                      key={`next-skeleton-${covers.length + index}`}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
+                      animate="visible"
+                      exit="exit"
+                      initial="hidden"
+                      key={`${cover.album}-${index}`}
+                      layout
+                      layoutId={`${cover.album}-${index}`}
+                      variants={itemVariants}
                     >
-                      <Skeleton className="aspect-square w-full rounded-lg" />
+                      <AlbumCover
+                        {...cover}
+                        id={`${cover.album}-${index}`}
+                        onClick={() => {
+                          setSelectedCover(cover);
+                          setIsSheetOpen(true);
+                        }}
+                      />
                     </motion.li>
                   ))}
-              </AnimatePresence>
-            </motion.ul>
-          )}
+              {isFetchingNextPage &&
+                Array.from({ length: 10 }, (_, index) => (
+                  <motion.li
+                    key={`next-skeleton-${covers.length + index}`}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                  >
+                    <Skeleton className="aspect-square w-full rounded-lg" />
+                  </motion.li>
+                ))}
+            </AnimatePresence>
+          </motion.ul>
           {hasNextPage && (
             <motion.div
               className="h-1"
