@@ -37,7 +37,7 @@ const transformRecord = (record: ApiRecord): Cover => {
 };
 
 export const fetchCovers = async (
-  params: FetchCoversParams
+  params: FetchCoversParams,
 ): Promise<CoversResponse> => {
   const { offset = 0, limit = 50, searchTerm = "" } = params;
 
@@ -52,7 +52,7 @@ export const fetchCovers = async (
 
   try {
     const response = await axios.get<ApiCoversResponse>(
-      `/api/covers?${queryParams.toString()}`
+      `/api/covers?${queryParams.toString()}`,
     );
 
     // Safely transform records, filtering out any that fail transformation
@@ -85,13 +85,13 @@ export const fetchCovers = async (
       throw new Error(
         `Failed to fetch covers${
           statusCode ? ` (${statusCode})` : ""
-        }: ${errorMessage}`
+        }: ${errorMessage}`,
       );
     }
     throw new Error(
       `Failed to fetch covers: ${
         error instanceof Error ? error.message : "Unknown error"
-      }`
+      }`,
     );
   }
 };

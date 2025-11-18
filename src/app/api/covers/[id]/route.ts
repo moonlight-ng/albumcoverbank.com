@@ -9,7 +9,7 @@ const baseUrl =
 
 export async function GET(
   _request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   if (!apiToken) {
     return NextResponse.json(
@@ -17,7 +17,7 @@ export async function GET(
         error: "Server configuration error",
         message: "API credentials are not configured",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 
@@ -27,7 +27,7 @@ export async function GET(
     if (!id) {
       return NextResponse.json(
         { error: "Missing required parameter: id" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -47,14 +47,14 @@ export async function GET(
             error: `Server error: ${error.response.status}`,
             message: error.response.data?.message || error.message,
           },
-          { status: error.response.status || 500 }
+          { status: error.response.status || 500 },
         );
       } else if (error.request) {
         return NextResponse.json(
           {
             error: "Network error: Could not connect to server",
           },
-          { status: 503 }
+          { status: 503 },
         );
       }
     }
@@ -64,7 +64,7 @@ export async function GET(
         error: "Internal server error",
         message: error instanceof Error ? error.message : "Unknown error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

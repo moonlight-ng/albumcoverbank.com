@@ -82,7 +82,7 @@ export default function Home() {
       if (lastPage.records.length === LIMIT) {
         const totalRecordsFetched = allPages.reduce(
           (sum, page) => sum + page.records.length,
-          0
+          0,
         );
         return totalRecordsFetched;
       }

@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
         error: "Server configuration error",
         message: "API credentials are not configured",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 
@@ -43,7 +43,7 @@ export async function GET(request: NextRequest) {
           error: "Missing required parameter: q or searchTerm",
           message: "Please provide a search query",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -88,14 +88,14 @@ export async function GET(request: NextRequest) {
             error: `Server error: ${error.response.status}`,
             message: error.response.data?.message || error.message,
           },
-          { status: error.response.status || 500 }
+          { status: error.response.status || 500 },
         );
       } else if (error.request) {
         return NextResponse.json(
           {
             error: "Network error: Could not connect to server",
           },
-          { status: 503 }
+          { status: 503 },
         );
       }
     }
@@ -105,7 +105,7 @@ export async function GET(request: NextRequest) {
         error: "Internal server error",
         message: error instanceof Error ? error.message : "Unknown error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
