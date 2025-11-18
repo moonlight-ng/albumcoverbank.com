@@ -1,37 +1,5 @@
-import type { Metadata } from "next";
 import { Aside } from "@/components/layout/aside";
-import { SITE_CONFIG } from "@/constants/site";
 
-export const metadata: Metadata = {
-  title: {
-    default: "Explore 5000+ Nigerian Album Covers",
-    template: `%s - ${SITE_CONFIG.title}`,
-  },
-  description: SITE_CONFIG.description,
-  openGraph: {
-    title: SITE_CONFIG.title,
-    description: SITE_CONFIG.description,
-    url: SITE_CONFIG.url,
-    siteName: SITE_CONFIG.title,
-    images: [
-      {
-        url: SITE_CONFIG.openGraphImage,
-        width: 1200,
-        height: 630,
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    images: [
-      {
-        url: SITE_CONFIG.openGraphImage,
-        width: 1200,
-        height: 630,
-      },
-    ],
-  },
-};
 
 interface MainLayoutProps {
   children: React.ReactNode;
