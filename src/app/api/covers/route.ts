@@ -18,6 +18,27 @@ const buildSearchWhere = (searchTerm: string): string => {
   return `(Album,like,%${searchValue}%)~or(Name (from Music Artists),like,%${searchValue}%)~or(Name (from Cover Artists),like,%${searchValue}%)`;
 };
 
+// Helper function to build where clause for year filter
+const buildYearWhere = (year: string): string => {
+  if (!year || year.trim() === "") {
+    return "";
+  }
+  return `(Year,eq,${year.trim()})`;
+};
+
+// Helper function to combine where clauses
+const combineWhereClauses = (...clauses: string[]): string => {
+  const validClauses = clauses.filter((clause) => clause && clause.trim() !== "");
+  if (validClauses.length === 0) {
+    return "";
+  }
+  if (validClauses.length === 1) {
+    return validClauses[0];
+  }
+  // Combine with ~and operator
+  return validClauses.join("~and");
+};
+
 export async function GET(request: NextRequest) {
   if (!apiToken || !viewId) {
     return NextResponse.json(
@@ -35,10 +56,13 @@ export async function GET(request: NextRequest) {
     const offset = searchParams.get("offset") || "0";
     const limit = searchParams.get("limit") || "25";
     const searchTerm = searchParams.get("searchTerm") || "";
+    const year = searchParams.get("year") || "";
 
-    console.log("Fetching covers with params:", { offset, limit, searchTerm });
+    console.log("Fetching covers with params:", { offset, limit, searchTerm, year });
 
-    const whereClause = buildSearchWhere(searchTerm);
+    const searchWhere = buildSearchWhere(searchTerm);
+    const yearWhere = buildYearWhere(year);
+    const whereClause = combineWhereClauses(searchWhere, yearWhere);
 
     // Build query parameters manually to avoid double-encoding issues with where clause
     const params = new URLSearchParams({
