@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { motion, AnimatePresence } from "motion/react";
 import { fetchCovers } from "@/lib/fetch";
@@ -40,7 +41,7 @@ const itemVariants = {
   },
 };
 
-export default function Home() {
+function HomeContent() {
   const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
@@ -226,5 +227,31 @@ export default function Home() {
         onClose={() => setIsSheetOpen(false)}
       />
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex flex-col h-full">
+          <PageHeader searchQuery="" onSearchChange={() => {}} isLoading />
+          <div className="flex-1 overflow-y-auto">
+            <PageContainer className="p-6">
+              <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
+                {Array.from({ length: 50 }, (_, index) => (
+                  <Skeleton
+                    key={index}
+                    className="aspect-square w-full rounded-lg"
+                  />
+                ))}
+              </div>
+            </PageContainer>
+          </div>
+        </div>
+      }
+    >
+      <HomeContent />
+    </Suspense>
   );
 }

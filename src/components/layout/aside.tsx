@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { Info } from "lucide-react";
 import Link from "next/link";
 import { ThemeToggle } from "../ui/theme-toggle";
@@ -26,7 +27,9 @@ export const Aside = () => {
       </div>
 
       {/* Timeline (flex-1, scrolls) */}
-      <Timeline />
+      <Suspense fallback={<div className="flex-1" />}>
+        <Timeline />
+      </Suspense>
 
       {/* Actions (fixed) */}
       <div
