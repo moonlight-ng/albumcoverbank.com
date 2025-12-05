@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 import { CoverSheet } from "@/components/cover-sheet";
 import { PageContainer } from "@/components/layout/container";
 import { AlbumCover } from "@/components/album-cover";
+import { useSearchParams } from "next/navigation";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -40,10 +41,15 @@ const itemVariants = {
 };
 
 export default function Home() {
+  const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
   const [selectedCover, setSelectedCover] = useState<Cover | null>(null);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+
+  // Get year from URL params
+  const yearParam = searchParams.get("year");
+  const selectedYear = yearParam ? parseInt(yearParam, 10) : undefined;
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -63,12 +69,13 @@ export default function Home() {
     hasNextPage,
     error,
   } = useInfiniteQuery({
-    queryKey: ["covers", debouncedSearchQuery],
+    queryKey: ["covers", debouncedSearchQuery, selectedYear],
     queryFn: ({ pageParam = 0 }) =>
       fetchCovers({
         offset: pageParam,
         limit: LIMIT,
         searchTerm: debouncedSearchQuery,
+        year: selectedYear,
       }),
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) => {

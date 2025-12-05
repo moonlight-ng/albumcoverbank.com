@@ -39,7 +39,7 @@ const transformRecord = (record: ApiRecord): Cover => {
 export const fetchCovers = async (
   params: FetchCoversParams,
 ): Promise<CoversResponse> => {
-  const { offset = 0, limit = 50, searchTerm = "" } = params;
+  const { offset = 0, limit = 50, searchTerm = "", year } = params;
 
   const queryParams = new URLSearchParams({
     offset: offset.toString(),
@@ -48,6 +48,10 @@ export const fetchCovers = async (
 
   if (searchTerm) {
     queryParams.append("searchTerm", searchTerm);
+  }
+
+  if (year) {
+    queryParams.append("year", year.toString());
   }
 
   try {
