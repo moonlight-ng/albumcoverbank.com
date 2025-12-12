@@ -4,7 +4,7 @@ export const SITE_CONFIG = {
   title: "Cover Bank",
   description:
     "A searchable archive of 5000+ images of Nigerian album cover art",
-  openGraphImage: "/meta.png",
+  openGraphImage: "/meta.webp",
   favicon: "/favicon.ico",
   url: getBaseUrl(),
   image: "/seo.jpg",
