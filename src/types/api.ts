@@ -34,4 +34,5 @@ export interface FetchCoversParams {
   offset?: number;
   limit?: number;
   searchTerm?: string;
+  year?: number;
 }

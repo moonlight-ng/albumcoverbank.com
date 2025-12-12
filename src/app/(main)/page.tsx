@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { motion, AnimatePresence } from "motion/react";
 import { fetchCovers } from "@/lib/fetch";
@@ -10,6 +11,7 @@ import { useState, useEffect } from "react";
 import { CoverSheet } from "@/components/cover-sheet";
 import { PageContainer } from "@/components/layout/container";
 import { AlbumCover } from "@/components/album-cover";
+import { useSearchParams } from "next/navigation";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -39,11 +41,16 @@ const itemVariants = {
   },
 };
 
-export default function Home() {
+function HomeContent() {
+  const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
   const [selectedCover, setSelectedCover] = useState<Cover | null>(null);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+
+  // Get year from URL params
+  const yearParam = searchParams.get("year");
+  const selectedYear = yearParam ? parseInt(yearParam, 10) : undefined;
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -63,12 +70,13 @@ export default function Home() {
     hasNextPage,
     error,
   } = useInfiniteQuery({
-    queryKey: ["covers", debouncedSearchQuery],
+    queryKey: ["covers", debouncedSearchQuery, selectedYear],
     queryFn: ({ pageParam = 0 }) =>
       fetchCovers({
         offset: pageParam,
         limit: LIMIT,
         searchTerm: debouncedSearchQuery,
+        year: selectedYear,
       }),
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) => {
@@ -219,5 +227,31 @@ export default function Home() {
         onClose={() => setIsSheetOpen(false)}
       />
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex flex-col h-full">
+          <PageHeader searchQuery="" onSearchChange={() => {}} isLoading />
+          <div className="flex-1 overflow-y-auto">
+            <PageContainer className="p-6">
+              <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
+                {Array.from({ length: 50 }, (_, index) => (
+                  <Skeleton
+                    key={index}
+                    className="aspect-square w-full rounded-lg"
+                  />
+                ))}
+              </div>
+            </PageContainer>
+          </div>
+        </div>
+      }
+    >
+      <HomeContent />
+    </Suspense>
   );
 }
