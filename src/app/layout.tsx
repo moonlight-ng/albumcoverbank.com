@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "../styles/globals.css";
 import { SITE_CONFIG } from "@/constants/site";
 import Providers from "./providers";
@@ -68,6 +69,30 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <Script
+          src="https://plausible.io/js/pa-mgX9mxc4zCwGKdL0417kI.js"
+          strategy="afterInteractive"
+        />
+        <Script id="plausible-init" strategy="afterInteractive">
+          {`
+            window.plausible = window.plausible || function() {
+              (plausible.q = plausible.q || []).push(arguments);
+            };
+            plausible.init = plausible.init || function(i) {
+              plausible.o = i || {};
+            };
+            plausible.init();
+          `}
+        </Script>
+        {process.env.NODE_ENV === "production" && (
+          <Script
+            src="https://cdn.visitors.now/v.js"
+            data-token="ec5ddf84-4ae4-43cd-b5be-2ffa4a240e1d"
+            async
+          />
+        )}
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

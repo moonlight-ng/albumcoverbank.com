@@ -2,6 +2,7 @@
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   const queryClient = new QueryClient({
@@ -21,7 +22,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
         disableTransitionOnChange
         enableSystem
       >
-        {children}
+        <NuqsAdapter>{children}</NuqsAdapter>
       </NextThemesProvider>
     </QueryClientProvider>
   );

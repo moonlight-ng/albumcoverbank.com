@@ -1,13 +1,12 @@
 "use client";
 
 import { Search, X } from "lucide-react";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
 import Link from "next/link";
+import { Input } from "../ui/input";
 
 interface PageHeaderProps {
   searchQuery: string;
-  onSearchChange: (value: string) => void;
+  onSearchChange: (value: string | null) => void;
   isLoading?: boolean;
 }
 
@@ -17,7 +16,7 @@ export const PageHeader = ({
   isLoading = false,
 }: PageHeaderProps) => {
   const handleClear = () => {
-    onSearchChange("");
+    onSearchChange(null);
   };
 
   return (
@@ -27,7 +26,7 @@ export const PageHeader = ({
         <Input
           type="text"
           value={searchQuery}
-          onChange={(e) => onSearchChange(e.target.value)}
+          onChange={(e) => onSearchChange(e.target.value || null)}
           placeholder="Search albums, artists, designers..."
           disabled={isLoading}
           className="pl-9 pr-9 border-2 rounded-full w-full focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none focus:ring-0 focus:ring-offset-0 focus:outline-none"

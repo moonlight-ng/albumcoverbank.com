@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { CoverSheet } from "@/components/cover-sheet";
 import { PageContainer } from "@/components/layout/container";
 import { AlbumCover } from "@/components/album-cover";
-import { useSearchParams } from "next/navigation";
+import { useQueryState, parseAsString, parseAsInteger } from "nuqs";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -42,15 +42,15 @@ const itemVariants = {
 };
 
 function HomeContent() {
-  const searchParams = useSearchParams();
-  const [searchQuery, setSearchQuery] = useState("");
-  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useQueryState(
+    "q",
+    parseAsString.withDefault("")
+  );
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState(searchQuery);
   const [selectedCover, setSelectedCover] = useState<Cover | null>(null);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
-  // Get year from URL params
-  const yearParam = searchParams.get("year");
-  const selectedYear = yearParam ? parseInt(yearParam, 10) : undefined;
+  const [selectedYear] = useQueryState("year", parseAsInteger);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -76,7 +76,7 @@ function HomeContent() {
         offset: pageParam,
         limit: LIMIT,
         searchTerm: debouncedSearchQuery,
-        year: selectedYear,
+        year: selectedYear ?? undefined,
       }),
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) => {
@@ -90,7 +90,7 @@ function HomeContent() {
       if (lastPage.records.length === LIMIT) {
         const totalRecordsFetched = allPages.reduce(
           (sum, page) => sum + page.records.length,
-          0,
+          0
         );
         return totalRecordsFetched;
       }
@@ -241,6 +241,7 @@ export default function Home() {
               <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
                 {Array.from({ length: 50 }, (_, index) => (
                   <Skeleton
+                    // biome-ignore lint/suspicious/noArrayIndexKey: <>
                     key={index}
                     className="aspect-square w-full rounded-lg"
                   />
