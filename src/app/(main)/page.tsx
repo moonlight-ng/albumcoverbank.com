@@ -12,6 +12,7 @@ import { CoverSheet } from "@/components/cover-sheet";
 import { PageContainer } from "@/components/layout/container";
 import { AlbumCover } from "@/components/album-cover";
 import { useQueryState, parseAsString, parseAsInteger } from "nuqs";
+import { Button } from "@/components/ui/button";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -44,13 +45,13 @@ const itemVariants = {
 function HomeContent() {
   const [searchQuery, setSearchQuery] = useQueryState(
     "q",
-    parseAsString.withDefault("")
+    parseAsString.withDefault(""),
   );
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState(searchQuery);
   const [selectedCover, setSelectedCover] = useState<Cover | null>(null);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
-  const [selectedYear] = useQueryState("year", parseAsInteger);
+  const [selectedYear, setSelectedYear] = useQueryState("year", parseAsInteger);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -90,7 +91,7 @@ function HomeContent() {
       if (lastPage.records.length === LIMIT) {
         const totalRecordsFetched = allPages.reduce(
           (sum, page) => sum + page.records.length,
-          0
+          0,
         );
         return totalRecordsFetched;
       }
@@ -108,6 +109,8 @@ function HomeContent() {
         <PageHeader
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
+          selectedYear={selectedYear}
+          onYearClear={() => setSelectedYear(null)}
           isLoading={isLoading}
         />
         <div className="flex-1 overflow-y-auto">
@@ -130,14 +133,22 @@ function HomeContent() {
         <PageHeader
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
+          selectedYear={selectedYear}
+          onYearClear={() => setSelectedYear(null)}
           isLoading={isLoading}
         />
         <div className="flex-1 overflow-y-auto">
-          <PageContainer className="p-6">
-            <div className="flex items-center justify-center h-full">
+          <PageContainer className="p-6 flex items-center justify-center">
+            <div className="flex flex-col items-center gap-3">
               <p className="text-muted-foreground">
                 No covers found for &quot;{debouncedSearchQuery}&quot;
               </p>
+              <Button
+                onClick={() => setSearchQuery("")}
+                className="rounded-full w-fit"
+              >
+                Reset Filters
+              </Button>
             </div>
           </PageContainer>
         </div>
@@ -150,6 +161,8 @@ function HomeContent() {
       <PageHeader
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
+        selectedYear={selectedYear}
+        onYearClear={() => setSelectedYear(null)}
         isLoading={isLoading}
       />
       <div className="flex-1 overflow-y-auto">
