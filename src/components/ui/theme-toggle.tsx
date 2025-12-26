@@ -17,11 +17,7 @@ export const ThemeToggle = () => {
   if (!mounted) {
     // Return a placeholder with the same structure to prevent hydration mismatch
     return (
-      <Button
-        variant="ghost"
-        size="icon"
-        aria-label="Toggle theme"
-      >
+      <Button variant="ghost" size="icon" aria-label="Toggle theme">
         <Sun className="h-5 w-5" />
       </Button>
     );

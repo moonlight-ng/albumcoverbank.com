@@ -28,7 +28,9 @@ const buildYearWhere = (year: string): string => {
 
 // Helper function to combine where clauses
 const combineWhereClauses = (...clauses: string[]): string => {
-  const validClauses = clauses.filter((clause) => clause && clause.trim() !== "");
+  const validClauses = clauses.filter(
+    (clause) => clause && clause.trim() !== "",
+  );
   if (validClauses.length === 0) {
     return "";
   }
@@ -58,7 +60,12 @@ export async function GET(request: NextRequest) {
     const searchTerm = searchParams.get("searchTerm") || "";
     const year = searchParams.get("year") || "";
 
-    console.log("Fetching covers with params:", { offset, limit, searchTerm, year });
+    console.log("Fetching covers with params:", {
+      offset,
+      limit,
+      searchTerm,
+      year,
+    });
 
     const searchWhere = buildSearchWhere(searchTerm);
     const yearWhere = buildYearWhere(year);

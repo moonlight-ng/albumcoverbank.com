@@ -21,7 +21,7 @@ export const Timeline = () => {
 
   const handleYearClick = (year: number | null) => {
     const params = new URLSearchParams(searchParams.toString());
-    
+
     if (year === null) {
       // Remove year param for "All"
       params.delete("year");
@@ -29,7 +29,7 @@ export const Timeline = () => {
       // Set year param
       params.set("year", year.toString());
     }
-    
+
     router.push(`?${params.toString()}`);
   };
 
@@ -125,4 +125,3 @@ export const Timeline = () => {
     </div>
   );
 };
-
