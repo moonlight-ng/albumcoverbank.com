@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense } from "react";
+import { Suspense, lazy } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { motion, AnimatePresence } from "motion/react";
 import { fetchCovers } from "@/lib/fetch";
@@ -8,11 +8,14 @@ import type { Cover } from "@/types/api";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PageHeader } from "@/components/layout/header";
 import { useState, useEffect } from "react";
-import { CoverSheet } from "@/components/cover-sheet";
 import { PageContainer } from "@/components/layout/container";
 import { AlbumCover } from "@/components/album-cover";
 import { useQueryState, parseAsString, parseAsInteger } from "nuqs";
 import { Button } from "@/components/ui/button";
+
+const CoverSheet = lazy(() =>
+  import("@/components/cover-sheet").then((mod) => ({ default: mod.CoverSheet })),
+);
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -202,6 +205,7 @@ function HomeContent() {
                       <AlbumCover
                         {...cover}
                         id={`${cover.album}-${index}`}
+                        priority={index < 15}
                         onClick={() => {
                           setSelectedCover(cover);
                           setIsSheetOpen(true);
@@ -234,11 +238,15 @@ function HomeContent() {
           )}
         </PageContainer>
       </div>
-      <CoverSheet
-        cover={selectedCover}
-        isOpen={isSheetOpen}
-        onClose={() => setIsSheetOpen(false)}
-      />
+      {isSheetOpen && (
+        <Suspense fallback={null}>
+          <CoverSheet
+            cover={selectedCover}
+            isOpen={isSheetOpen}
+            onClose={() => setIsSheetOpen(false)}
+          />
+        </Suspense>
+      )}
     </div>
   );
 }
