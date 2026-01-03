@@ -47,7 +47,7 @@ const transformRecord = (record: ApiRecord): Cover => {
  * Use this in Server Components to pre-fetch data.
  */
 export const fetchCoversServer = async (
-  params: FetchCoversParams
+  params: FetchCoversParams,
 ): Promise<CoversResponse> => {
   const { offset = 0, limit = 50 } = params;
 
