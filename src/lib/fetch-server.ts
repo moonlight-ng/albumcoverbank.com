@@ -83,7 +83,6 @@ export const fetchCoversServer = async (
         try {
           return transformRecord(record);
         } catch {
-          // Silently skip records without images or other required fields
           return null;
         }
       })
