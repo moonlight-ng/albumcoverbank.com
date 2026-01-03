@@ -1,6 +1,7 @@
 "use client";
 
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 // Generate years from 1950 to current year
 const generateYears = (): number[] => {
@@ -17,7 +18,12 @@ export const Timeline = () => {
   const years = generateYears();
   const searchParams = useSearchParams();
   const router = useRouter();
+  const pathname = usePathname();
   const selectedYear = searchParams.get("year");
+
+  if (pathname !== "/") {
+    return null;
+  }
 
   const handleYearClick = (year: number | null) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -50,7 +56,7 @@ export const Timeline = () => {
           h-8 md:h-12
           pointer-events-none
           z-10
-          bg-gradient-to-b from-background to-transparent
+          bg-linear-to-b from-background to-transparent
         "
       />
       {/* Bottom fade gradient */}
@@ -60,7 +66,7 @@ export const Timeline = () => {
           h-8 md:h-12
           pointer-events-none
           z-10
-          bg-gradient-to-t from-background to-transparent
+          bg-linear-to-t from-background to-transparent
         "
       />
       <div
@@ -83,41 +89,34 @@ export const Timeline = () => {
             w-max md:w-full
           "
         >
-          <li
-            onClick={() => handleYearClick(null)}
-            className={`
-              text-xs
-              transition-colors
-              cursor-pointer
-              whitespace-nowrap md:whitespace-normal
-              flex-shrink-0
-              ${
+          <li className="leading-none">
+            <button
+              onClick={() => handleYearClick(null)}
+              type="button"
+              className={cn(
+                "text-xs transition-colors cursor-pointer whitespace-nowrap md:whitespace-normal shrink-0",
                 isActive(null)
                   ? "text-foreground font-medium"
-                  : "text-muted-foreground hover:text-foreground"
-              }
-            `}
-          >
-            All
+                  : "text-muted-foreground hover:text-foreground",
+              )}
+            >
+              All
+            </button>
           </li>
           {years.map((year) => (
-            <li
-              key={year}
-              onClick={() => handleYearClick(year)}
-              className={`
-                text-xs
-                transition-colors
-                cursor-pointer
-                whitespace-nowrap md:whitespace-normal
-                flex-shrink-0
-                ${
+            <li key={year} className="leading-none">
+              <button
+                onClick={() => handleYearClick(year)}
+                type="button"
+                className={cn(
+                  "text-xs transition-colors cursor-pointer whitespace-nowrap md:whitespace-normal shrink-0 w-full",
                   isActive(year)
                     ? "text-foreground font-medium"
-                    : "text-muted-foreground hover:text-foreground"
-                }
-              `}
-            >
-              {year}
+                    : "text-muted-foreground hover:text-foreground",
+                )}
+              >
+                {year}
+              </button>
             </li>
           ))}
         </ul>

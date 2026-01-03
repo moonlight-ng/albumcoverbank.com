@@ -20,7 +20,7 @@ export const Aside = () => {
       "
     >
       {/* Logo (fixed) */}
-      <div className="flex items-center justify-center flex-shrink-0 px-4 md:px-0 py-3 md:py-4">
+      <div className="flex items-center justify-center shrink-0 px-4 md:px-0 py-3 md:py-4">
         <Link href="/" className="text-[#683522] dark:text-primary">
           <Logo className="h-9 w-9" />
         </Link>
@@ -34,10 +34,11 @@ export const Aside = () => {
       {/* Actions (fixed) */}
       <div
         className="
+          mt-auto
           flex flex-row md:flex-col
           items-center justify-center
           gap-3 md:gap-2
-          flex-shrink-0
+          shrink-0
           px-4 md:px-0
           py-3 md:py-4
         "
