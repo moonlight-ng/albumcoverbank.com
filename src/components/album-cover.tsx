@@ -7,9 +7,15 @@ import Image from "next/image";
 interface AlbumCoverProps extends CoverType {
   id: string | number;
   onClick: () => void;
+  priority?: boolean;
 }
 
-export const AlbumCover = ({ album, imageUrl, onClick }: AlbumCoverProps) => {
+export const AlbumCover = ({
+  album,
+  imageUrl,
+  onClick,
+  priority = false,
+}: AlbumCoverProps) => {
   const [isLoading, setIsLoading] = useState(true);
 
   return (
@@ -27,9 +33,11 @@ export const AlbumCover = ({ album, imageUrl, onClick }: AlbumCoverProps) => {
         className={`w-full h-full object-cover transition-opacity duration-300 ${
           isLoading ? "opacity-0" : "opacity-100"
         }`}
-        loading="lazy"
+        loading={priority ? undefined : "lazy"}
+        priority={priority}
         width={300}
         height={300}
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 33vw, 300px"
         onLoad={() => setIsLoading(false)}
       />
     </button>

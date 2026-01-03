@@ -105,7 +105,13 @@ export async function GET(request: NextRequest) {
       offset: data.offset || data.pageInfo?.nextCursor || null,
     };
 
-    return NextResponse.json(result, { status: 200 });
+    return NextResponse.json(result, {
+      status: 200,
+      headers: {
+        "Cache-Control":
+          "public, s-maxage=60, stale-while-revalidate=300, max-age=30",
+      },
+    });
   } catch (error: unknown) {
     console.error("Error fetching covers:", error);
 
