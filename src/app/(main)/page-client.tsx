@@ -7,11 +7,16 @@ import type { Cover, CoversResponse } from "@/types/api";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PageHeader } from "@/components/layout/header";
 import { useState, useEffect } from "react";
-import { CoverSheet } from "@/components/cover-sheet";
+import dynamic from "next/dynamic";
 import { PageContainer } from "@/components/layout/container";
 import { AlbumCover } from "@/components/album-cover";
 import { useQueryState, parseAsString, parseAsInteger } from "nuqs";
 import { Button } from "@/components/ui/button";
+
+const CoverSheet = dynamic(
+  () => import("@/components/cover-sheet").then((mod) => mod.CoverSheet),
+  { ssr: false },
+);
 
 const containerVariants = {
   hidden: { opacity: 0 },
