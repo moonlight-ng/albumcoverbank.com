@@ -1,6 +1,6 @@
 "use client";
 
-import { Search, X } from "lucide-react";
+import { Search, X, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { Input } from "../ui/input";
 import { AnimatePresence, motion } from "motion/react";
@@ -13,6 +13,7 @@ interface PageHeaderProps {
   selectedYear?: number | null;
   onYearClear?: () => void;
   isLoading?: boolean;
+  isTyping?: boolean;
 }
 
 export const PageHeader = ({
@@ -21,6 +22,7 @@ export const PageHeader = ({
   selectedYear,
   onYearClear,
   isLoading = false,
+  isTyping = false,
 }: PageHeaderProps) => {
   const handleClear = () => {
     onSearchChange(null);
@@ -30,13 +32,16 @@ export const PageHeader = ({
     <header className="flex flex-col gap-2 px-6 py-4">
       <div className="flex items-center gap-3">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none z-10" />
+          {isTyping || isLoading ? (
+            <Loader2 className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none z-10 animate-spin" />
+          ) : (
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none z-10" />
+          )}
           <Input
             type="text"
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value || null)}
             placeholder="Search albums, artists, designers..."
-            disabled={isLoading}
             className="pl-9 pr-9 border-2 rounded-full w-full focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none focus:ring-0 focus:ring-offset-0 focus:outline-none"
           />
           {searchQuery && (
