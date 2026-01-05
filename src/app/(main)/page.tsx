@@ -5,6 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { PageContainer } from "@/components/layout/container";
 import { Search } from "lucide-react";
 
+// ISR: Revalidate every hour - page is cached at build and refreshed periodically
 export const revalidate = 3600;
 
 function LoadingFallback() {

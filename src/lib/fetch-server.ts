@@ -47,12 +47,15 @@ const transformRecord = (record: ApiRecord): Cover => {
  * Use this in Server Components to pre-fetch data.
  */
 export const fetchCoversServer = async (
-  params: FetchCoversParams,
+  params: FetchCoversParams
 ): Promise<CoversResponse> => {
   const { offset = 0, limit = 50 } = params;
 
   if (!apiToken || !viewId) {
-    console.error("Server configuration error: API credentials not configured");
+    console.error("[fetch-server] Missing env vars:", {
+      hasApiToken: !!apiToken,
+      hasViewId: !!viewId,
+    });
     return { records: [], offset: null };
   }
 
@@ -78,7 +81,8 @@ export const fetchCoversServer = async (
       await response.json();
 
     // Transform records, filtering out any that fail transformation
-    const records = (data.records || data.list || [])
+    const rawRecords = data.records || data.list || [];
+    const records = rawRecords
       .map((record) => {
         try {
           return transformRecord(record);
@@ -87,6 +91,11 @@ export const fetchCoversServer = async (
         }
       })
       .filter((record): record is Cover => record !== null);
+
+    console.log("[fetch-server] Result:", {
+      rawCount: rawRecords.length,
+      transformedCount: records.length,
+    });
 
     return {
       records,

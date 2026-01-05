@@ -89,7 +89,7 @@ export function HomeContent({ initialData }: HomeContentProps) {
   const LIMIT = 50;
 
   // Determine if we should use initial data (only on fresh load with no filters)
-  const hasFilters = debouncedSearchQuery || selectedYear;
+  const hasFilters = Boolean(debouncedSearchQuery || selectedYear);
 
   const {
     data,
@@ -127,13 +127,16 @@ export function HomeContent({ initialData }: HomeContentProps) {
       // No more pages
       return undefined;
     },
-    // Use server-fetched initial data only when no filters are applied
-    initialData: !hasFilters
-      ? {
-          pages: [initialData],
-          pageParams: [0],
-        }
-      : undefined,
+    // Use placeholderData instead of initialData - it shows while fetching
+    // and doesn't have the stale cache issues when switching filters
+    // Only use if server actually returned data
+    placeholderData:
+      !hasFilters && initialData.records.length > 0
+        ? {
+            pages: [initialData],
+            pageParams: [0],
+          }
+        : undefined,
   });
 
   const covers: Cover[] = data?.pages.flatMap((page) => page.records) ?? [];
