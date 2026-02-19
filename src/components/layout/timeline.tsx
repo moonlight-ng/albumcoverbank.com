@@ -3,10 +3,10 @@
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
-// Generate years from 1950 to current year
+// Generate years from 1959 to current year (earliest cover in collection)
 const generateYears = (): number[] => {
   const currentYear = new Date().getFullYear();
-  const startYear = 1950;
+  const startYear = 1959;
   const years: number[] = [];
   for (let year = currentYear; year >= startYear; year--) {
     years.push(year);

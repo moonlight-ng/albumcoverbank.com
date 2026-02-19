@@ -196,6 +196,36 @@ export function HomeContent({ initialData }: HomeContentProps) {
     );
   }
 
+  if (!isLoading && covers.length === 0 && selectedYear) {
+    return (
+      <div className="flex flex-col h-full">
+        <PageHeader
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+          selectedYear={selectedYear}
+          onYearClear={() => setSelectedYear(null)}
+          isLoading={isLoading}
+          isTyping={isTyping}
+        />
+        <div className="flex-1 overflow-y-auto">
+          <PageContainer className="p-6 flex items-center justify-center">
+            <div className="flex flex-col items-center gap-3">
+              <p className="text-muted-foreground">
+                No covers found for the year <span className="font-semibold">{selectedYear}</span>
+              </p>
+              <Button
+                onClick={() => setSelectedYear(null)}
+                className="rounded-full w-fit"
+              >
+                Reset Filters
+              </Button>
+            </div>
+          </PageContainer>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col h-full">
       <PageHeader
